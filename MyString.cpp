@@ -6,7 +6,8 @@
 
 MyString::MyString(char *_str) {
     size = strlen(_str);
-    values= new char[size+1];
+    values= new char[size + 1];
+
     strcpy(values, _str);
     values[size+1]='\0';
 
@@ -14,7 +15,6 @@ MyString::MyString(char *_str) {
 
 MyString::~MyString() {
     delete [] values;
-
 }
 
 void MyString::print() {
@@ -22,11 +22,11 @@ void MyString::print() {
 
 }
 
-void MyString::add(char *_element) {
+void MyString::add(const char *_element) {
     add(_element, size);
 }
 
-void MyString::addLeft(char *_element) {
+void MyString::addLeft(const char *_element) {
     add(_element, 0);
 }
 
@@ -58,7 +58,7 @@ MyString MyString::operator+(const MyString& a) {
     return b;
 }
 
-MyString MyString::operator+(char *a) {
+MyString MyString::operator+(const char *a) {
     MyString b = MyString(values);
     b.add(a);
     return b;
@@ -68,7 +68,7 @@ void MyString::operator+=(const MyString& a) {
     add(a.values);
 }
 
-void MyString::operator+=(char *a) {
+void MyString::operator+=(const char *a) {
     add(a);
 }
 
@@ -79,16 +79,22 @@ bool MyString::operator==(const MyString& a) {
     return false;
 }
 
-bool MyString::operator==(char *a) {
+bool MyString::operator==(const char *a) {
     if (strcmp(a, values) == 0){
         return true;
     }
     return false;
 }
 
-void MyString::add(char *_element, int _startIndex) {
+void MyString::add(const char *_element, int _startIndex) {
     size += strlen(_element);
-    realloc(values, sizeof(char) * size+1);
+    int* status = (int*) realloc(values, sizeof(char) * size+1);
+
+    if (status == nullptr) {
+        delete [] values;
+        std::cout << "Ошибка перевыделения памяти!";
+        exit (1);
+    }
 
     char *bufStart =new char[size+1];
     char *bufEnd = new char[size+1];
@@ -104,8 +110,14 @@ void MyString::add(char *_element, int _startIndex) {
     }
     strcat(bufStart, _element);
     strcat(bufStart, bufEnd);
-    delete [] values;
     bufStart[size+1]= '\0';
     values = bufStart;
-    delete [] bufEnd;
+}
+
+MyString::MyString(const MyString &a) {
+    size = a.size;
+    values= new char[size + 1];
+
+    strcpy(values, a.values);
+    values[size+1]='\0';
 }

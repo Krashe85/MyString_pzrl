@@ -2,21 +2,19 @@
 #include "MyString.h"
 
 int main() {
-    char *def = "Test";
-    char *def2 = "Test222";
+    char *def = "Test ";
+    char *def3 = " cool ";
     MyString string = MyString(def);
-    MyString string2 = MyString(def2);
-    string.add(def);
-    string.add(def);
-    string+=def;
+    MyString string2 = MyString(def3);
+    string += string2;
     string.print();
-    string+=string2;
-    string.add(def2, 5);
-    char *newElement = "f";
-    string.add(def2);
-    string.addLeft(def);
-    string.replaceElement(5, *newElement);
-    string.removeElement(6);
-    string.print();
+    string2 = string + string2;
+    string2.removeElement(7);
+    string2.print();
+    string2.replaceElement(7, *"g");
+    string2.print();
+    string2.add(" Test ", 8);
+    string2.print();
+
     return 0;
 }

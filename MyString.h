@@ -6,32 +6,34 @@
 #define STRING_MYSTRING_H
 #include <string>
 #include <iostream>
+#include <cstring>
 
 
 class MyString {
 private:
-    char *values{};
-    int size{};
+    char *values;
+    int size;
 
 public:
     explicit MyString(char *_str);
     MyString();
+    MyString(const MyString &a);
     ~MyString();
 
     int getLen();
     void  print();
-    void add(char *_element);
-    void add(char *_element, int _startIndex);
-    void addLeft(char *_element);
+    void add(const char *_element);
+    void add(const char *_element, int _startIndex);
+    void addLeft(const char *_element);
     void replaceElement(int _position, char _newElement);
     void removeElement(int  _elementIndex);
 
     MyString operator+(const MyString& a);
-    MyString operator+(char* a);
+    MyString operator+(const char* a);
     void operator+=(const MyString& a);
-    void operator+=(char* a);
+    void operator+=(const char* a);
     bool operator==(const MyString& a);
-    bool operator==(char* a);
+    bool operator==(const char* a);
 };
 
 
